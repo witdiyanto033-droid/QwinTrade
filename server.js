@@ -63,7 +63,7 @@ async function geminiAnalysis(symbol,technicalData,bars){
 TECHNICAL=${JSON.stringify(technicalData)}
 OHLC=${JSON.stringify(compact)}`;
   try{
-    const r=await ai.models.generateContent({model:process.env.GEMINI_MODEL||"gemini-3.8-flash",contents:prompt});
+    const r=await ai.models.generateContent({model:process.env.GEMINI_MODEL||"gemini-3.5-flash",contents:prompt});
     return {enabled:true,text:r.text||""};
   }catch(e){return {enabled:false,text:"Gemini error: "+e.message}}
 }
