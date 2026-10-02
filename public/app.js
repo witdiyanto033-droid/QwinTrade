@@ -4,7 +4,7 @@ const symbolEl = $("symbol");
 const intervalEl = $("interval");
 
 async function loadMarket() {
-  const symbol = symbolEl?.value || "XAUUSD";
+  const symbol = symbolEl?.value || "XAU/USD";
   const interval = intervalEl?.value || "1min";
 
   try {
