@@ -70,7 +70,12 @@ OHLC=${JSON.stringify(compact)}`;
 app.get("/api/config",(q,r)=>r.json({refreshSeconds:REFRESH,minSignalScore:MIN_SCORE,vapidPublicKey:process.env.VAPID_PUBLIC_KEY||null}));
 app.get("/api/market",async(req,res)=>{
   try{
-    const symbol=req.query.symbol||process.env.DEFAULT_SYMBOL||"XAU/USD", interval=req.query.interval||process.env.DEFAULT_INTERVAL||"1min";
+    let symbol=req.query.symbol||process.env.DEFAULT_SYMBOL||"XAU/USD";
+
+if (symbol === "XAUUSD") {
+  symbol = "XAU/USD";
+}
+    const interval=req.query.interval||process.env.DEFAULT_INTERVAL||"1min";
     const key=symbol+"|"+interval, now=Date.now(), c=cache.get(key);
     if(c&&now-c.time<REFRESH*1000)return res.json(c.data);
     const bars=await td(symbol,interval), tech=technical(bars), aiData=await geminiAnalysis(symbol,tech,bars);
